@@ -1,0 +1,105 @@
+#!/usr/bin/env ruby
+
+require 'ostruct'
+require 'pp'
+
+DEFAULT_SIZE = 2.freeze
+
+def size; Integer(ARGV.at(0) || DEFAULT_SIZE); end
+
+def number; ARGV.at(1); end
+
+class LCDNumberConverter
+  attr_accessor :size
+
+  def initialize(_size)
+    @size = _size
+  end
+
+  def self.number_to_lcd(*numbers, size)
+    lcd = self.new(size)
+
+    lcd_numbers = []
+    numbers_scaled = []
+    numbers.each do |number|
+      lcd_numbers << lcd.public_send('to_lcd_' + number.to_s)
+    end
+
+    lcd_numbers.map! { |n| n.split("\n") }.each { |number_lines|
+      number_scaled = []
+
+      number_lines.each { |line|
+        first_char, last_char = line[0], line[-1]
+        middle = line[1..-2].to_s * size
+        scaled_line = first_char + middle + last_char
+
+        if scaled_line.include? "|"
+          size.times { number_scaled << scaled_line }
+        else
+          number_scaled << scaled_line
+        end
+      }
+
+      numbers_scaled << number_scaled
+    }
+
+    carets = numbers_scaled.first.length
+
+    carets.times { |i|
+      numbers_scaled.each { |number|
+        print number[i]
+        print ' '
+      }
+      print "\n"
+    }
+  end
+
+  def to_lcd_space
+    space =<<-EOL
+ 
+ 
+ 
+ 
+ 
+    EOL
+    print space
+  end
+
+  def to_lcd_1
+    number_one = <<-EOL
+   
+  |
+   
+  |
+   
+    EOL
+  end
+
+  def to_lcd_2
+    number_two =<<-EOL.gsub(/^[[:space:]]{6}/, '')
+ _ 
+  |
+ - 
+|  
+ - 
+    EOL
+  end
+
+  def to_lcd_8
+    number_two =<<-EOL.gsub(/^[[:space:]]{6}/, '')
+ _ 
+| |
+ - 
+| |
+ - 
+    EOL
+  end
+
+end
+
+5.times { |i|
+  LCDNumberConverter.number_to_lcd(8, 1, 1, 2, 2, 1, 8, i + 1)
+}
+
+
+__END__
