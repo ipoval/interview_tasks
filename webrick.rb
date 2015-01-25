@@ -4,16 +4,17 @@ require 'webrick'
 
 server = WEBrick::HTTPServer.new(Port: 1991)
 
-server.mount_proc('/') do |request, response|
+server.mount_proc('/') do |_request, response|
   response['Content-Type'] = 'test/plain; charset=UTF-8'
   response.body << Time.now.ctime
   response.body << "\n"
   response.body << Blog.first.posts.first.to_s
 end
 
+#
 class Blog
   def self.first
-    self.new
+    new
   end
 
   def posts
@@ -21,6 +22,7 @@ class Blog
   end
 end
 
+#
 class Post
   attr_accessor :body
 
@@ -31,7 +33,7 @@ class Post
   def to_s
     <<-EOL
     Title: is comming
-    Body: #@body
+    Body: #{@body}
     EOL
   end
 end
@@ -39,5 +41,3 @@ end
 server.start
 
 __END__
-
-
