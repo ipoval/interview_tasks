@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+[[ $1 ]] || { echo 'missing argument' >&2; exit 1; }
+
 date=$(date)
 read -p 'enter your note: ' note
 
@@ -36,5 +38,3 @@ echo -e
 echo +added \'$note\' to $filename
 
 exit 0
-
-
