@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# simple not-tacking script
+# simple note tacking script
 # author: @ipoval
 
 [[ $1 ]] || { echo 'missing argument' >&2; exit 1; }
