@@ -1,21 +1,23 @@
 #!/usr/bin/env bash
 
+# simple not-tacking script
+# author: @ipoval
+
 [[ $1 ]] || { echo 'missing argument' >&2; exit 1; }
 
-date=$(date)
-read -p 'enter your note: ' note
+set -x # debugging on
+declare -r date=$(date)
+declare -r topic="$1"
+set +x # debugging off
 
+read -p 'enter your note: ' note
 if [[ ! $note ]]; then
-  echo no input
+  echo no input >&2;
   exit 1
 fi
 
-set -x                                        # debugging on
-# get the topic
-topic="$1"
-set +x
-
-filename="${HOME}/.Trash/${topic}_notest.txt"
+declare -r notesdir=${NOTESDIR:-$HOME}
+declare -r filename="${notesdir}/.Trash/${topic}_notest.txt"
 
 echo -n "are you sure (y/n)?"
 
