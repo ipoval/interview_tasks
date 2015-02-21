@@ -37,7 +37,7 @@ function append(element) {
 function find(element) {
   for (var i in this.dataStore) {
     if (this.dataStore[i] === element) {
-      return i;
+      return parseInt(i);
     }
   }
   return -1;
@@ -58,27 +58,39 @@ function toString() {
 }
 
 function clear() {
-
+  delete this.dataStore;
+  this.dataStore = [];
+  this.listSize = this.pos = 0;
 }
 
-function insert() {
-
+function insert(element, afterElement) {
+  var afterIdx = this.find(afterElement);
+  if ( afterIdx > -1 ) {
+    this.dataStore.splice(afterIdx + 1, 0, element);
+    ++this.listSize;
+    return true;
+  }
+  return false;
 }
 
 function front() {
-
+  this.pos = 0;
 }
 
 function end() {
-
+  this.pos = this.listSize - 1;
 }
 
 function prev() {
-
+  if ( this.pos > 0 ) {
+    --this.pos;
+  }
 }
 
 function next() {
-
+  if ( this.pos < this.listSize - 1 ) {
+    ++this.pos;
+  }
 }
 
 function length() {
@@ -97,8 +109,8 @@ function getElement() {
 
 }
 
-function contains() {
-
+function contains(element) {
+  return this.find(element) > -1;
 }
 
 function listSize() {
@@ -115,11 +127,19 @@ if ( require.main == module ) {
   console.dir(symbols);
   console.info("\n");
 
-  var list = new List();
-  list.append('element0').append('element1');
-  console.dir(list);
+  var listOfNames = new List();
+
+  listOfNames.append('ivan').append('roman').append('vasya');
+  console.dir(listOfNames);
   console.info("\n");
-  console.info(list.toString());
+  console.info(listOfNames.toString());
+
+  listOfNames.insert('john', 'roman');
+  console.info(listOfNames.toString());
+
+  listOfNames.remove('roman')
+  console.info(listOfNames.toString());
+
 } else {
   console.error('Invoked via library call');
 }
