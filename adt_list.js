@@ -11,7 +11,7 @@
  */
 function List() {
   this.listSize   = 0;
-  this.curPos     = 0;
+  this.position     = 0;
   this.dataStore  = []; // initialize array to store list elements
   this.clear      = clear;
   this.find       = find;
@@ -69,7 +69,7 @@ function toString() {
 function clear() {
   delete this.dataStore;
   this.dataStore = [];
-  this.listSize = this.curPos = 0;
+  this.listSize = this.position = 0;
 }
 
 function insert(element, afterElement) {
@@ -83,31 +83,31 @@ function insert(element, afterElement) {
 }
 
 function front() {
-  this.curPos = 0;
+  this.position = 0;
 }
 
 function end() {
-  this.curPos = this.listSize - 1;
+  this.position = this.listSize - 1;
 }
 
 function prev() {
-  if ( this.curPos > 0 ) {
-    --this.curPos;
+  if ( this.position > 0 ) {
+    --this.position;
   }
 }
 
 function next() {
-  if ( this.curPos < this.listSize - 1 ) {
-    ++this.curPos;
+  if ( this.position < this.listSize - 1 ) {
+    ++this.position;
   }
 }
 
-function moveTo(position) {
-  this.curPos = position;
+function moveTo(newPosition) {
+  this.position = newPosition;
 }
 
 function getElement() {
-  return this.dataStore[this.curPos];
+  return this.dataStore[this.position];
 }
 
 function contains(element) {
@@ -118,7 +118,7 @@ function contains(element) {
  * __END__
  */
 
-if ( require.main == module ) {
+if ( typeof(require) !== 'undefined' && require.main == module ) {
   console.error('Invoked at command line.');
   var symbols = process.argv;
   console.dir(symbols);
@@ -140,5 +140,5 @@ if ( require.main == module ) {
   console.info(listOfNames.listSize);
 
 } else {
-  console.error('Invoked via library call');
+  console.error('adt_list.js: invoked via library call');
 }
