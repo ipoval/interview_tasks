@@ -1,4 +1,6 @@
-#!/usr/bin/env node
+'#!/usr/bin/env node';
+
+'use strict';
 
 /*
  * @ipoval
@@ -9,7 +11,7 @@
  */
 function List() {
   this.listSize   = 0;
-  this.pos        = 0;
+  this.curPos     = 0;
   this.dataStore  = []; // initialize array to store list elements
   this.clear      = clear;
   this.find       = find;
@@ -21,13 +23,20 @@ function List() {
   this.end        = end;
   this.prev       = prev;
   this.next       = next;
-  this.length     = length;
-  this.currPos    = currPos;
   this.moveTo     = moveTo;
   this.getElement = getElement;
-  this.length     = length;
   this.contains   = contains;
 }
+
+List.prototype = {
+  /* accessor @length: listInstance.length */
+  get length() {
+    return this.listSize;
+  },
+  set length(val) {
+    this.listSize = val;
+  },
+};
 
 function append(element) {
   this.dataStore[this.listSize++] = element;
@@ -60,7 +69,7 @@ function toString() {
 function clear() {
   delete this.dataStore;
   this.dataStore = [];
-  this.listSize = this.pos = 0;
+  this.listSize = this.curPos = 0;
 }
 
 function insert(element, afterElement) {
@@ -74,47 +83,35 @@ function insert(element, afterElement) {
 }
 
 function front() {
-  this.pos = 0;
+  this.curPos = 0;
 }
 
 function end() {
-  this.pos = this.listSize - 1;
+  this.curPos = this.listSize - 1;
 }
 
 function prev() {
-  if ( this.pos > 0 ) {
-    --this.pos;
+  if ( this.curPos > 0 ) {
+    --this.curPos;
   }
 }
 
 function next() {
-  if ( this.pos < this.listSize - 1 ) {
-    ++this.pos;
+  if ( this.curPos < this.listSize - 1 ) {
+    ++this.curPos;
   }
 }
 
-function length() {
-  return this.listSize;
-}
-
-function currPos() {
-
-}
-
-function moveTo() {
-
+function moveTo(position) {
+  this.curPos = position;
 }
 
 function getElement() {
-
+  return this.dataStore[this.curPos];
 }
 
 function contains(element) {
   return this.find(element) > -1;
-}
-
-function listSize() {
-
 }
 
 /*
@@ -137,8 +134,10 @@ if ( require.main == module ) {
   listOfNames.insert('john', 'roman');
   console.info(listOfNames.toString());
 
-  listOfNames.remove('roman')
+  listOfNames.remove('roman');
   console.info(listOfNames.toString());
+
+  console.info(listOfNames.listSize);
 
 } else {
   console.error('Invoked via library call');

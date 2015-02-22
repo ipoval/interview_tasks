@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<body>
+  please provide the full relative path to the resource to load into the browser.
+  <ul id="list:customJS"></ul>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+  <!-- begin custom js scripts -->
+  <script src="./adt_list.js"></script>
+  <!-- end of custom js scripts -->
+
+  <script>
+  (function($) {
+    $('script[src^="./"]').each(function(idx, scriptElement) {
+      var loadedScriptName = document.createTextNode(scriptElement.src);
+      document.getElementById('list:customJS').appendChild(loadedScriptName);
+    });
+  })(jQuery);
+  </script>
+</body>
+</html>
