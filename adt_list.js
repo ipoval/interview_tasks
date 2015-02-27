@@ -3,16 +3,15 @@
 'use strict';
 
 /*
- * @ipoval
- * ADT (Abstract Data Type) LIST
- *   implemented based on array
+ * ADT (Abstract Data Type) LIST implemented based on array
  *
- * Launch with node -p 'require("./adt_list");'
+ * @author: @ipoval
+ * @run:    node -p 'require("./adt_list");'
  */
 function List() {
+  this.dataStore  = []; /* initialize array to store list elements */
   this.listSize   = 0;
-  this.position     = 0;
-  this.dataStore  = []; // initialize array to store list elements
+  this.position   = 0;
   this.clear      = clear;
   this.find       = find;
   this.toString   = toString;
@@ -90,15 +89,15 @@ function end() {
   this.position = this.listSize - 1;
 }
 
-function prev() {
-  if ( this.position > 0 ) {
-    --this.position;
+function next() {
+  if ( this.position < this.length ) {
+    ++this.position;
   }
 }
 
-function next() {
-  if ( this.position < this.listSize - 1 ) {
-    ++this.position;
+function prev() {
+  if ( this.position >= 0 ) {
+    --this.position;
   }
 }
 
@@ -124,20 +123,24 @@ if ( typeof(require) !== 'undefined' && require.main == module ) {
   console.dir(symbols);
   console.info("\n");
 
-  var listOfNames = new List();
+  var list = new List();
 
-  listOfNames.append('ivan').append('roman').append('vasya');
-  console.dir(listOfNames);
+  list.append('ivan').append('roman').append('vasya');
+  console.dir(list);
   console.info("\n");
-  console.info(listOfNames.toString());
+  list.insert('john', 'roman');
+  list.remove('roman');
+  console.info(list.toString());
 
-  listOfNames.insert('john', 'roman');
-  console.info(listOfNames.toString());
-
-  listOfNames.remove('roman');
-  console.info(listOfNames.toString());
-
-  console.info(listOfNames.listSize);
+  /*
+   * Iterator
+   */
+  for ( list.front(); list.position < list.length; list.next() ) {
+    console.log('Iterator: ', list.getElement(), list.position);
+  }
+  for ( list.end(); list.position >= 0; list.prev() ) {
+    console.log('Iterator Reverse: ', list.getElement(), list.position);
+  }
 
 } else {
   console.error('adt_list.js: invoked via library call');
