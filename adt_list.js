@@ -1,5 +1,9 @@
 '#!/usr/bin/env node';
 
+window = this;
+
+(function(global) {
+
 'use strict';
 
 /*
@@ -37,19 +41,19 @@ List.prototype = {
   },
 };
 
-function append(element) {
+List.prototype.append = function(element) {
   this.dataStore[this.listSize++] = element;
   return this;
-}
+};
 
-function find(element) {
+List.prototype.find = function(element) {
   for (var i in this.dataStore) {
     if (this.dataStore[i] === element) {
       return parseInt(i);
     }
   }
   return -1;
-}
+};
 
 function remove(element) {
   var foundAt = this.find(element);
@@ -113,6 +117,10 @@ function contains(element) {
   return this.find(element) > -1;
 }
 
+global.adt_List = List;
+
+})(window);
+
 /*
  * __END__
  */
@@ -123,7 +131,7 @@ if ( typeof(require) !== 'undefined' && require.main == module ) {
   console.dir(symbols);
   console.info("\n");
 
-  var list = new List();
+  var list = new window.adt_List();
 
   list.append('ivan').append('roman').append('vasya');
   console.dir(list);
