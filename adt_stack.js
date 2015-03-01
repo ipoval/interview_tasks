@@ -60,10 +60,8 @@ if ( typeof(require) !== 'undefined' && require.main == module ) {
 
   var stack = new window.adt_Stack();
 
-  stack.append('ivan').append('roman').append('vasya');
+  stack.push(3).push(2).push(1);
   console.dir(stack);
-  console.info("\n");
-  console.info(stack.toString());
 } else {
   console.error('adt_stack.js: invoked via library call');
 }
