@@ -52,6 +52,26 @@ global.adt_Stack = Stack;
  * __END__
  */
 
+/*
+ * MULTIPLE BASE CONVERSION ALTORITHM BASED ON STACK
+ * converts bases 2..9
+ */
+function multiBaseConvert(numberBase10, convertToBase) {
+  var d = numberBase10, stack = new adt_Stack(), result = '';
+
+  do {
+    stack.push(d % convertToBase);
+    d = Math.floor(d / convertToBase);
+  } while (d > convertToBase);
+  stack.push(d);
+
+  while ( stack.length ) {
+    result += stack.pop().toString();
+  }
+
+  return result;
+}
+
 if ( typeof(require) !== 'undefined' && require.main == module ) {
   console.error('Invoked at command line.');
   var symbols = process.argv;
@@ -62,6 +82,7 @@ if ( typeof(require) !== 'undefined' && require.main == module ) {
 
   stack.push(3).push(2).push(1);
   console.dir(stack);
+
 } else {
   console.error('adt_stack.js: invoked via library call');
 }
