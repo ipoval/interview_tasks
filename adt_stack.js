@@ -72,6 +72,20 @@ function multiBaseConvert(numberBase10, convertToBase) {
   return result;
 }
 
+function isPalindrome(str) {
+  var reversedStr = '', char = '', stack = new adt_Stack();
+
+  for (var i = 0; i < str.length; ++i) {
+    stack.push(str[i]);
+  }
+
+  while(char = stack.pop()) {
+    reversedString += char;
+  }
+
+  return str == reversedStr;
+}
+
 if ( typeof(require) !== 'undefined' && require.main == module ) {
   console.error('Invoked at command line.');
   var symbols = process.argv;
