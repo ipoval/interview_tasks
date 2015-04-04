@@ -13,14 +13,31 @@ window = this;
  * @author: @ipoval
  * @run:    node -p 'require("./adt_linked_list");'
  */
+function Node(data) {
+  this.data = data;
+  this.next = null;
+}
+
 function LinkedList() {
-  this.head = 0;
-  this.tail = 0;
+  this.head = new Node('head');
 }
 
 LinkedList.prototype = {
-  toString: function() {
-  }
+  toString: function() {},
+  find: function(data) {
+    var curNode = this.head;
+    do {
+      if (curNode.data === data) {
+        return curNode
+      }
+    } while ( curNode.next )
+  },
+  insert: function(data, afterNodeWithData) {
+    var afterNode = this.find(afterNodeWithData);
+    if ( !afterNode ) { return; }
+    afterNode.next = new Node(data);
+  },
+  remove: function() {}
 };
 
 global.adt_LinkedList = LinkedList;
