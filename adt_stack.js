@@ -1,5 +1,6 @@
 '#!/usr/bin/env node';
 
+/* work around to load this file in 2 environments: node.js and web-browser */
 window = this;
 
 (function(global) {

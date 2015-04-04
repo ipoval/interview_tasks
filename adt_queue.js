@@ -1,18 +1,20 @@
 '#!/usr/bin/env node';
 
-/* work around to load this file in 2 environments: node.js and web-browser */
+/*
+ * ADT (Abstract Data Type) QUEUE implemented based on array
+ *
+ * @author: @ipoval
+ * @run:    node -p 'require("./adt_queue");'
+ *
+ * allow to load this script in 2 environments: node.js and web-browser
+ * http://localhost:8081/adt_queue.js
+ */
 window = this;
 
 (function(global) {
 
 'use strict';
 
-/*
- * ADT (Abstract Data Type) QUEUE implemented based on array
- *
- * @author: @ipoval
- * @run:    node -p 'require("./adt_queue");'
- */
 function Queue() {
   this.dataStore = []; /* initialize array to store queue elements */
   this.queueSize = 0;
