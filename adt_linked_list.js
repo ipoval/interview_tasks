@@ -35,7 +35,9 @@ LinkedList.prototype = {
   insert: function(data, afterNodeWithData) {
     var afterNode = this.find(afterNodeWithData);
     if ( !afterNode ) { return; }
-    afterNode.next = new Node(data);
+    var newNode = new Node(data);
+    newNode.next = afterNode.next;
+    afterNode.next = newNode;
   },
   remove: function() {}
 };
