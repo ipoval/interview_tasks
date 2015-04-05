@@ -16,10 +16,12 @@ window = this;
 function Node(data) {
   this.data = data;
   this.next = null;
+  this.previous = null; /* for Doubly Linked List only */
 }
 
 function LinkedList() {
   this.head = new Node('head');
+  this.head.next = this.head; /* for Circularly Linked List only */
 }
 
 LinkedList.prototype = {
@@ -61,7 +63,27 @@ LinkedList.prototype = {
     if ( prevNode.next !== null ) {
       prevNode.next = prevNode.next.next;
     }
+  },
+
+  findLast: function() {
+    var currNode = this.head;
+    while ( currNode.next !== null ) {
+      currNode = currNode.next;
+    }
+    return currNode;
+  },
+
+  /* for doubly linked lists only */
+  dispReverse: function() {
+    var currNode = this.head;
+    currNode = this.findLast();
+    while ( currNode.previous !== null ) {
+      console.info(currNode.element);
+      currNode = currNode.previous;
+    }
   }
+
+  /* TODO: API to implement advance(n), back(n), show() */
 };
 
 global.adt_LinkedList = LinkedList;
