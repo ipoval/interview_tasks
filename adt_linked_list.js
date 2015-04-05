@@ -23,7 +23,14 @@ function LinkedList() {
 }
 
 LinkedList.prototype = {
-  toString: function() {},
+  toString: function() {
+    var currNode = this.head;
+    while ( currNode.next !== null ) {
+      console.info(currNode.next.data);
+      currNode = currNode.next;
+    }
+  },
+
   find: function(data) {
     var curNode = this.head;
     do {
@@ -32,6 +39,7 @@ LinkedList.prototype = {
       }
     } while ( curNode.next )
   },
+
   insert: function(data, afterNodeWithData) {
     var afterNode = this.find(afterNodeWithData);
     if ( !afterNode ) { return; }
@@ -39,7 +47,21 @@ LinkedList.prototype = {
     newNode.next = afterNode.next;
     afterNode.next = newNode;
   },
-  remove: function() {}
+
+  findPrevious: function(item) {
+    var currNode = this.head;
+    while ( (currNode.next !== null) && (currNode.next.element !== item) ) {
+      currNode = currNode.next;
+    }
+    return currNode;
+  },
+
+  remove: function(item) {
+    var prevNode = this.findPrevious(item);
+    if ( prevNode.next !== null ) {
+      prevNode.next = prevNode.next.next;
+    }
+  }
 };
 
 global.adt_LinkedList = LinkedList;
