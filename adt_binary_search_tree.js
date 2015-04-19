@@ -48,6 +48,9 @@ BST.prototype = {
   reachedLeftLeaf: function() {
     return this.current.left === null;
   },
+  reachedRightLeaf: function() {
+    return this.current.right === null;
+  },
 
   get traverse() { return this; },
 
@@ -101,6 +104,14 @@ BST.prototype = {
       this.current = this.current.left;
     }
     return this.current.data;
+  },
+
+  max: function() {
+    this.current = this.root;
+    while ( !this.reachedRightLeaf() ) {
+      this.current = this.current.right;
+    }
+    return this.current.data;
   }
 }
 
@@ -127,4 +138,6 @@ console.log(Array(30).join('-'));
 
 /* BST Search */
 console.log(bst.search.min());
+console.log(Array(30).join('-'));
+console.log(bst.search.max());
 console.log(Array(30).join('-'));
