@@ -46,7 +46,7 @@ BST.prototype = {
   set current(_currentNode) { this.currentNode = _currentNode; },
 
   reachedLeftLeaf: function() {
-    return false;
+    return this.current.left === null;
   },
 
   get traverse() { return this; },
@@ -96,14 +96,12 @@ BST.prototype = {
   get search() { return this; },
 
   min: function() {
-    var parent = this.root,
-      current = parent;
-
-    while (current.left !== null) {
-      current = current.left;
+    this.current = this.root;
+    while ( !this.reachedLeftLeaf() ) {
+      this.current = this.current.left;
     }
-    return current.data;
-  },
+    return this.current.data;
+  }
 }
 
 /*
