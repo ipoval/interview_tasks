@@ -2,48 +2,53 @@ function Node(data, left, right) {
   this.data = data;
   this.left = left;
   this.right = right;
-  this.show = show;
-}
-
-function show() {
-  return this.data;
+  this.show = function() {
+    return this.data;
+  };
 }
 
 function BST() {
   this.root = null;
-  this.insert = insert;
-}
+  this.currentNode = this.root;
 
-function insert(data) {
-  var newNode = new Node(data, null, null);
+  this.insert = function insert(data) {
+    var newNode = new Node(data, null, null);
 
-  if ( this.root === null ) {
-    this.root = newNode;
-    return;
-  }
+    if ( this.root === null ) {
+      this.root = newNode;
+      return;
+    }
 
-  var parent, current = this.root;
+    var parent, current = this.root;
 
-  while (true) {
-    parent = current;
+    while (true) {
+      parent = current;
 
-    if (data < current.data) {
-      current = current.left;
-      if (current === null) {
-        parent.left = newNode;
-        break;
-      }
-    } else {
-      current = current.right;
-      if (current === null) {
-        parent.right = newNode;
-        break;
+      if (data < current.data) {
+        current = current.left;
+        if (current === null) {
+          parent.left = newNode;
+          break;
+        }
+      } else {
+        current = current.right;
+        if (current === null) {
+          parent.right = newNode;
+          break;
+        }
       }
     }
-  }
+  };
 }
 
 BST.prototype = {
+  get current() { return this.currentNode; },
+  set current(_currentNode) { this.currentNode = _currentNode; },
+
+  reachedLeftLeaf: function() {
+    return false;
+  },
+
   get traverse() { return this; },
 
   inOrder: function() {
@@ -91,10 +96,15 @@ BST.prototype = {
   get search() { return this; },
 
   min: function() {
-    console.info(this.root);
+    var parent = this.root,
+      current = parent;
+
+    while (current.left !== null) {
+      current = current.left;
+    }
+    return current.data;
   },
 }
-
 
 /*
  * __END__
@@ -109,12 +119,14 @@ bst.insert(3);
 bst.insert(99);
 bst.insert(22);
 
-// bst.traverse.inOrder();
-//
-// console.log(Array(30).join('-'));
-//
-// bst.traverse.preOrder();
-//
-// console.log(Array(30).join('-'));
-//
-// bst.traverse.postOrder();
+/* BST Traversal */
+bst.traverse.inOrder();
+console.log(Array(30).join('-'));
+bst.traverse.preOrder();
+console.log(Array(30).join('-'));
+bst.traverse.postOrder();
+console.log(Array(30).join('-'));
+
+/* BST Search */
+console.log(bst.search.min());
+console.log(Array(30).join('-'));
