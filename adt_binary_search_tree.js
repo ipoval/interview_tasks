@@ -112,6 +112,23 @@ BST.prototype = {
       this.current = this.current.right;
     }
     return this.current.data;
+  },
+
+  find: function(data) {
+    var parent = this.root;
+      current = parent;
+
+    while (true) {
+      if (current === null) { return '404'; }
+      if ( current.data === data ) { return current; }
+
+      if ( current.data > data ) {
+        current = current.left;
+      } else {
+        current = current.right;
+      }
+    }
+
   }
 }
 
