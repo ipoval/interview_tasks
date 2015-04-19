@@ -44,48 +44,57 @@ function insert(data) {
 }
 
 BST.prototype = {
-  traverseInOrder: function() {
+  get traverse() { return this; },
+
+  inOrder: function() {
     var parent = this.root;
 
-    function traverse(node) {
+    function trav(node) {
       if (node !== null) {
-        traverse(node.left);
+        trav(node.left);
         console.log(node.data);
-        traverse(node.right);
+        trav(node.right);
       }
     };
 
-    traverse(parent);
+    trav(parent);
   },
 
-  traversePreOrder: function() {
+  preOrder: function() {
     var parent = this.root;
 
-    function traverse(node) {
+    function trav(node) {
       if (node !== null) {
         console.log(node.data);
-        traverse(node.left);
-        traverse(node.right);
+        trav(node.left);
+        trav(node.right);
       }
     };
 
-    traverse(parent);
+    trav(parent);
   },
 
-  traversePostOrder: function() {
+  postOrder: function() {
     var parent = this.root;
 
-    function traverse(node) {
+    function trav(node) {
       if (node !== null) {
-        traverse(node.left);
-        traverse(node.right);
+        trav(node.left);
+        trav(node.right);
         console.log(node.data);
       }
     };
 
-    traverse(parent);
-  }
+    trav(parent);
+  },
+
+  get search() { return this; },
+
+  min: function() {
+    console.info(this.root);
+  },
 }
+
 
 /*
  * __END__
@@ -100,12 +109,12 @@ bst.insert(3);
 bst.insert(99);
 bst.insert(22);
 
-bst.traverseInOrder();
-
-console.log(Array(30).join('-'));
-
-bst.traversePreOrder();
-
-console.log(Array(30).join('-'));
-
-bst.traversePostOrder();
+// bst.traverse.inOrder();
+//
+// console.log(Array(30).join('-'));
+//
+// bst.traverse.preOrder();
+//
+// console.log(Array(30).join('-'));
+//
+// bst.traverse.postOrder();
