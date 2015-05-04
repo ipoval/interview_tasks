@@ -10,6 +10,12 @@ declare -r date=$(date)
 declare -r topic="$1"
 set +x # debugging off
 
+declare notesdir=${NOTESDIR:-$HOME}
+
+if [[ ! -d $notesdir ]]; then
+  mkdir -- "${notesdir}" 2> /dev/null || { echo "cannot make directory ${notesdir}"; exit 1; }
+fi
+
 read -p 'enter your note: ' note
 if [[ ! $note ]]; then
   echo no input >&2;
