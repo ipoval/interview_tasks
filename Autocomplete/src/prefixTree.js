@@ -3,23 +3,21 @@ var PrefixTree = function() {
 }
 
 PrefixTree.prototype.addWord = function(word) {
-  var addedLetters = [];
-  var current = null;
+  var addedLetters = [], current = null, letter = null;
+
+  current = this;
 
   for ( var i = 0; i < word.length; i++ ) {
-    var letter = word[i];
+    letter = word[i];
 
-    if ( Object.keys(this.children).length == 0 ) {
-      // root
-      this.children[letter] = new PrefixTree();
+    if ( Object.keys(current.children).length == 0 ) { // root
+      current.children[letter] = new PrefixTree();
       addedLetters.push(letter);
       continue;
     }
 
-    current = this;
     for ( var j = 0; j < addedLetters.length; j++ ) {
-      var l = addedLetters[j];
-      current = current.children[l];
+      current = current.children[addedLetters[j]];
     }
 
     if ( !current.children[letter] ) {
@@ -28,8 +26,7 @@ PrefixTree.prototype.addWord = function(word) {
     addedLetters.push(letter);
   }
 
-  current.children['end'] = '';
-
+  current.children[letter]['end'] = ''; // mark end of whole word
   return word;
 }
 
