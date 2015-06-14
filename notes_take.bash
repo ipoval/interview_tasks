@@ -10,20 +10,25 @@ declare -r date=$(date)
 declare -r topic="$1"
 set +x # debugging off
 
-declare notesdir=${NOTESDIR:-$HOME}
+declare -r notesdir=${NOTESDIR:-$HOME}
 
 if [[ ! -d $notesdir ]]; then
   mkdir -- "${notesdir}" 2> /dev/null || { echo "cannot make directory ${notesdir}"; exit 1; }
 fi
+
+declare -r filename="${notesdir}/${topic}_notest.txt"
+
+if [[ ! -f $filename ]]; then
+  touch "${filename}" 2> /dev/null || { echo "cannt create file ${filename}" 1>&2; exit 1; }
+fi
+
+[[ -w $filename ]] || { echo "${filename} is not writable" 1>&2; exit 1; }
 
 read -p 'enter your note: ' note
 if [[ ! $note ]]; then
   echo no input >&2;
   exit 1
 fi
-
-declare -r notesdir=${NOTESDIR:-$HOME}
-declare -r filename="${notesdir}/.Trash/${topic}_notest.txt"
 
 echo -n "are you sure (y/n)?"
 
