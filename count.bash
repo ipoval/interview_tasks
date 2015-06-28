@@ -15,14 +15,7 @@ Print each number up to stop, beginning at 0
 END
 }
 
-# function to handle errors
-# 1st arg - error msg to print
-# 2nd arg - exit code
-function error() {
-  echo "error: $1"
-  usage
-  exit $2
-} >&2
+source "$(dirname $0)/inc_error.bash"
 
 declare reverse=""
 declare -i begin=0
@@ -39,9 +32,11 @@ while getopts ":hb:s:r" opt; do
       ;;
     :)
       error "Option -${OPTARG} is missing and argument" 2
+      usage
       ;;
     \?)
       error "Unknown option -${OPTARG}" 3
+      usage
       ;;
   esac
 done
