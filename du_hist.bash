@@ -2,6 +2,9 @@
 
 # du histogram version
 # prints the current disk usage as a histogram
+# run in foreground: bash ./du_hist.bash
+# run in background since it may take some time for big directories:
+#                    nice ./du_hist.bash &
 
 # this script is compatible with Bash 4 and higher which is not installed by default on many Linux-family systems
 # use `brew install bash` to install Bash 4 on Mac OS X
