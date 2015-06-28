@@ -2,14 +2,53 @@
 
 # 1st arg: error msg to print
 # 2nd arg: exit code
-error() {
+
+function usage() {
+  cat <<END
+count [-r] [-b n] [-s n] stop
+
+Print each number up to stop, beginning at 0
+  -b: number to begin with (default: 0)
+  -h: show this help message
+  -r: reverses the count
+  -s: sets step size (default: 1)
+END
+}
+
+# function to handle errors
+# 1st arg - error msg to print
+# 2nd arg - exit code
+function error() {
   echo "error: $1"
   usage
   exit $2
 } >&2
 
+declare reverse=""
+declare -i begin=0
+declare -i step=1
+
+while getopts ":hb:s:r" opt; do
+  case $opt in
+    r)
+      reverse="yes"
+      ;;
+    h)
+      usage
+      exit 0
+      ;;
+    :)
+      error "Option -${OPTARG} is missing and argument" 2
+      ;;
+    \?)
+      error "Unknown option -${OPTARG}" 3
+      ;;
+  esac
+done
+
 # function returns 0 when its arg is number
 # $num_error contains error msg
+# example: isnum "08"
 isnum() {
   declare -r num_re='^[0-9]+$'
   declare -r octal_re='^0([0-8]+)$'
@@ -28,5 +67,4 @@ isnum() {
   return 0;
 }
 
-isnum "08"
 echo $num_error
