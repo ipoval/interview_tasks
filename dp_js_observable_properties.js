@@ -28,8 +28,8 @@ var Observable = function() {
         property = val;
 
         // Invoke property changed handlers
-        for (var i = 0; i < observersChanged.length; ++i) {
-          var observer = observersChanged[i];
+        for (i = 0; i < observersChanged.length; ++i) {
+          observer = observersChanged[i];
           observer(this);
         }
       }
@@ -44,7 +44,7 @@ var Observable = function() {
   this.onPropertyChanged = function(callback) {
     observersChanged.push(callback);
   };
-}
+};
 
 var observable = new Observable();
 
