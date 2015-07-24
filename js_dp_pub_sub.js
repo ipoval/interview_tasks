@@ -1,10 +1,13 @@
 /*
 * Simple Pub-sub library with a simple message bus ability
+* similar to Promisses pattern for executing deferred actions, but promisses
+* are better designed for asynchronous ops.
 *
 * Usage:
 * var pubsub = new PubSubPattern();
 * pubsub.pub('add-to-cart', {});
 * pubsub.pub('remove-from-cart', {});
+*
 */
 function PubSubPattern() {
   this.cache = {};

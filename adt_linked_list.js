@@ -21,7 +21,7 @@ function Node(data) {
 
 function LinkedList() {
   this.head = new Node('head');
-  this.head.next = this.head; /* for Circularly Linked List only */
+  // this.head.next = this.head; /* for Circularly Linked List only */
 }
 
 LinkedList.prototype = {
@@ -50,6 +50,17 @@ LinkedList.prototype = {
     afterNode.next = newNode;
   },
 
+  insertToEnd: function(data) {
+    var endNode = this.head;
+    while (endNode.next !== null) {
+      endNode = endNode.next;
+    }
+    endNode.next = new Node(data);
+    return this; // support for chaining DP: ll.insertToEnd(10).insertToEnd(20);
+    // TODO: more work if it's a circular LL
+    // TODO: more work if it's a doubly LL
+  },
+
   findPrevious: function(item) {
     var currNode = this.head;
     while ( (currNode.next !== null) && (currNode.next.element !== item) ) {
@@ -59,6 +70,13 @@ LinkedList.prototype = {
   },
 
   remove: function(item) {
+    if (this.head.data === item) {
+      var next = this.head.next;
+      delete this.head;
+      this.head = next;
+      return;
+    }
+
     var prevNode = this.findPrevious(item);
     if ( prevNode.next !== null ) {
       prevNode.next = prevNode.next.next;
@@ -101,7 +119,6 @@ if ( typeof(require) !== 'undefined' && require.main == module ) {
   console.info("\n");
 
   var linked_list = new window.adt_LinkedList();
-
 
 } else {
   console.error('adt_linked_list.js: invoked via library call');
