@@ -57,8 +57,10 @@ global.adt_Stack = Stack;
  * MULTIPLE BASE CONVERSION ALTORITHM BASED ON STACK
  * converts bases 2..9
  */
-function multiBaseConvert(numberBase10, convertToBase) {
-  var d = numberBase10, stack = new adt_Stack(), result = '';
+function multiBaseConvert(numberFromBase, convertToBase) {
+  var d = numberFromBase,
+    stack = new adt_Stack(),
+    result = '';
 
   do {
     stack.push(d % convertToBase);

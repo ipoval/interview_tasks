@@ -12,7 +12,7 @@ drawline() {
 }
 
 # exit if there are no arguments
-[[ ! $1 ]] && exit 0
+[[ ! $1 ]] && exit 1;
 
 declare -i len="${#1} + 4"
 drawline len

@@ -2,7 +2,15 @@
 // non-comparative integer sorting algorithm
 // O(dn) -> O(nlog(n)), d - number of digits
 
-var unsorted = [45,72,93,51,21,16,70,41,27,31];
+Array.randomNums = function(n) {
+  var arr = [];
+  for (var i = 0; i < n; i++) {
+    arr[i] = Math.floor(Math.random() * 100);
+  }
+  return arr;
+};
+
+var unsorted = Array.randomNums(100);
 
 function radixSort(arr) {
   var queues = [],

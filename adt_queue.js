@@ -88,3 +88,28 @@ if ( typeof(require) !== 'undefined' && require.main == module ) {
 } else {
   console.error('adt_queue.js: invoked via library call');
 }
+
+/* Queue implemented as singly linked list
+class Queue {
+  Node first, last;
+
+  void enqueue(0bject item) {
+    if (first == null) {
+      last = new Node(item);
+      first = last;
+    } else {
+      last.next = new Node(item);
+      last = last.next;
+    }
+  }
+
+  Object dequeueQ {
+    if (first != null) {
+      Object item = first.data;
+      first = first.next;
+      return item;
+    }
+    return null;
+  }
+}
+*/
