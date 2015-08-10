@@ -88,6 +88,45 @@ function isPalindrome(str) {
 
   return str == reversedStr;
 }
+/****************************************************************************************/
+
+/*
+ * Design a stack to have min() which returns the minimum elementin O(1) time.
+ */
+function StackWithMin() {
+  this.list = [];
+
+  this.push = function(data) {
+    this.list.unshift(this.wrappedData(data));
+    return this;
+  };
+
+  this.pop = function(data) {
+    return this.list.shift().raw;
+  };
+
+  this.peek = function() {
+    return (this.list[0] ? this.list[0].data : null);
+  };
+
+  this.min = function() {
+    return this.list[0].min;
+  };
+
+  this.wrappedData = function(rawData) {
+    var curMin = this.peek();
+    return {
+      raw: rawData,
+      min: (curMin && curMin <= data) ? curMin : rawData
+    };
+  };
+}
+
+var stk = new StackWithMin();
+stk.push(4).push(5).push(7);
+stk.pop(); // => 7
+stk.min(); // => 4
+/****************************************************************************************/
 
 if ( typeof(require) !== 'undefined' && require.main == module ) {
   console.error('Invoked at command line.');

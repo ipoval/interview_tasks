@@ -2,10 +2,34 @@ function Node(data, left, right) {
   this.data = data;
   this.left = left;
   this.right = right;
-  this.show = function() {
-    return this.data;
-  };
+  this.show = function() { return this.data; };
 }
+
+var BinaryTree = function() {
+  this.root = null;
+  this.currentNode = this.root;
+};
+
+/*
+ * Function checks if binary tree is binary search tree
+ * do in-order traversal and return false if following node < previous
+ */
+BinaryTree.prototype.checkIfBinarySearch = function() {
+  var prevNodeData = null, isBinarySearch = true;
+
+  var inOrder = function(node) {
+    if (!node) { return true; }
+    inOrder(node.left);
+    if (prevNodeData !== null && prevNodeData > node.data) {
+      return isBinarySearch = false;
+    }
+    prevNodeData = node.data
+    inOrder(node.right);
+  };
+  inOrder(this.root);
+
+  return isBinarySearch;
+};
 
 function BST() {
   this.root = null;
