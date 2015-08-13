@@ -95,13 +95,16 @@ function isPalindrome(str) {
  */
 function StackWithMin() {
   this.list = [];
+  this.size = 0;
 
   this.push = function(data) {
+    this.size++;
     this.list.unshift(this.wrappedData(data));
     return this;
   };
 
   this.pop = function(data) {
+    this.size--;
     return this.list.shift().raw;
   };
 
@@ -119,6 +122,12 @@ function StackWithMin() {
       raw: rawData,
       min: (curMin && curMin <= data) ? curMin : rawData
     };
+  };
+
+  /* sometimes may need to get a middle element from stack */
+  this.getMiddle = function() {
+    var middleIdx = Math.floor(this.size / 2);
+    return this.list[middleIdx];
   };
 }
 
