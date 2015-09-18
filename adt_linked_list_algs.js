@@ -1,4 +1,4 @@
-/*
+/* PRBLM
  * Remove Nth node from the end of the linked list
  * 1 -> 2 -> 3 -> 4 -> 5; n = 2; => 1 -> 2 -> 3 -> 5
  *
@@ -35,7 +35,7 @@ while ( list[pointer1] ) {
 list.splice(pointer2, 1);
 /****************************************************************************************/
 
-/*
+/* PRBLM
  * Delete a node in the middle of a singly linked list, given only access to that node.
  * example
  * input: the node c from the linked list a->b->c->d->e
@@ -47,16 +47,23 @@ function LinkedList(node) {
 }
 
 LinkedList.factoryLinkedList = function() {
+  if (arguments.length === 0) { throw 'ArgumentError: provide at least 1 element for the list'; }
+
   function Node(data) {
     this.data = data;
     this.next = null;
   }
 
-  var list = new LinkedList(new Node('a'));
-  list.head.next = new Node('b');
-  list.head.next.next = new Node('c');
-  list.head.next.next.next = new Node('d');
-  list.head.next.next.next.next = new Node('e');
+  var list = new LinkedList(new Node(arguments[0]));
+
+  if (!arguments[1]) { return list; } // only 1 argument is provided
+
+  var current = list.head;
+  for (var i = 1; i < arguments.length; i++) {
+    nextItem = new Node(arguments[i]);
+    current.next = nextItem;
+    current = current.next;
+  }
   return list;
 }
 
@@ -85,3 +92,39 @@ deleteNodeInTheMiddle(ll, ll.head.next.next);
 
 console.debug(ll);
 /****************************************************************************************/
+
+/* PRBLM
+ * Merge two sorted lists using O(1) additional storage
+ * input: l1->2->5-7; l2->3->11;
+ * result: l3->2->3->5->7->11;
+ */
+
+function mergeLists(l1, l2) {
+  var runner = l1.head, follower = l2.head;
+
+  if (runner.data > follower.data) { // choose the head with the smallest value from 2 lists
+    runner = l2.head;
+    follower = l1.head;
+  }
+
+  var mergedList = runner;
+
+  while (runner.next && follower) {
+    if (runner.next.data > follower.data) {
+      var fNext = follower.next;
+      follower.next = runner.next;
+      runner.next = follower;
+      follower = fNext;
+    }
+    runner = runner.next;
+  }
+
+  if (follower) { runner.next = follower; } // add tail of the second list to the first list
+
+  return mergedList;
+}
+
+var l1 = LinkedList.factoryLinkedList(2, 5, 7),
+  l2 = LinkedList.factoryLinkedList(3, 11);
+
+mergeLists(l1, l2);
