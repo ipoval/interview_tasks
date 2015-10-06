@@ -2,6 +2,7 @@
 
 /*
  * Observable properties DP
+ * - good use case for adding validation callbacks and data formatting
  */
 
 var Observable = function() {
