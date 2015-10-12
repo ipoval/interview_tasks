@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /*
- * Callback object DP
+ * Callback object DP with Function.bind use-case
  * - good use case for callbacks on async AJAX requests
  */
 
